@@ -3,8 +3,21 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// 加载全局样式
+// 加载iconfont 图标样式
+// import './styles/iconfont.css'
+
+// 引入vant及其样式
+import Vant from 'vant'
+import 'vant/lib/index.css'
+
+// 加载全局样式(最好放到最后，方便覆盖第三方样式)
 import './styles/index.less'
+
+// 自动设置rem 的基准值，设置字体大小
+import 'amfe-flexible'
+
+// 全局注册vant组件
+Vue.use(Vant)
 
 Vue.config.productionTip = false
 
