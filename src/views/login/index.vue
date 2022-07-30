@@ -1,14 +1,54 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="app-nav-bar" title="登录/注册" left-arrow @click-left="$router.back()" />
+    <van-nav-bar
+      class="app-nav-bar"
+      title="登录/注册"
+      left-arrow
+      @click-left="$router.back()"
+    />
     <!-- 输入表单 -->
-    <van-form :show-error="false" :show-error-message="false" validate-first ref="login-form" @submit="onLogin" @failed="onFailed">
-      <van-field v-model="user.mobile" name="mobile" icon-prefix="toutiao" left-icon="shouji" placeholder="请输入手机号" :rules="formRules.mobile" />
-      <van-field v-model="user.code" name="code" clearable icon-prefix="toutiao" left-icon="yanzhengma" placeholder="请输入验证码" :rules="formRules.code">
+    <van-form
+      :show-error="false"
+      :show-error-message="false"
+      validate-first
+      ref="login-form"
+      @submit="onLogin"
+      @failed="onFailed"
+    >
+      <van-field
+        v-model="user.mobile"
+        name="mobile"
+        icon-prefix="toutiao"
+        left-icon="shouji"
+        placeholder="请输入手机号"
+        :rules="formRules.mobile"
+      />
+      <van-field
+        v-model="user.code"
+        name="code"
+        clearable
+        icon-prefix="toutiao"
+        left-icon="yanzhengma"
+        placeholder="请输入验证码"
+        :rules="formRules.code"
+      >
         <template #button>
-          <van-count-down :time="1000 * 3" format="ss s" v-if="isCountDownShow" @finish="isCountDownShow = false" />
-          <van-button size="small" round class="send-btn" @click.prevent="onSendSms" :loading="isSendSmsLoading" v-else>发送验证码</van-button>
+          <van-count-down
+            :time="1000 * 3"
+            format="ss s"
+            v-if="isCountDownShow"
+            @finish="isCountDownShow = false"
+          />
+          <van-button
+            size="small"
+            round
+            class="send-btn"
+            @click.prevent="onSendSms"
+            :loading="isSendSmsLoading"
+            v-else
+            >发送验证码</van-button
+          >
         </template>
       </van-field>
       <div class="login-btn-wrap">
@@ -25,8 +65,8 @@ export default {
   data() {
     return {
       user: {
-        mobile: '', // 手机号
-        code: '' // 验证码
+        mobile: '13811111111', // 手机号
+        code: '246810' // 验证码
       },
       formRules: {
         mobile: [
@@ -55,6 +95,10 @@ export default {
         const { data } = await login(this.user)
         console.log(data)
         this.$toast.success('登录成功！')
+
+        // 跳转回来时的页面，可能是首页也可能是用户页面
+        // 但不是最佳跳转方案
+        this.$router.back()
 
         // 将后端返回的用户登录状态token 状态放入vuex中
         this.$store.commit('setUser', data.data)
